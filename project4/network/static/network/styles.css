@@ -1,0 +1,15 @@
+.post {
+    border: 1px solid lightgray;
+    border-radius: 20px;
+    margin-left:20px;
+    padding: 10px;
+}
+
+.header {
+    padding: 20px;
+}
+
+.pagination {
+    padding:50px;
+    font-size: 20px;
+}

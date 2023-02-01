@@ -1,0 +1,55 @@
+{% extends "network/layout.html" %}
+
+{% block title %}Followed posts{% endblock %}
+
+{% block body %}
+    <div class="user_id" hidden>{{ user.id }}</div>
+
+    <div class="header">
+        <h2>Following posts:</h2>
+        <br>
+    </div>
+    
+    {% for post in posts %}
+        <div class="post">
+            <h4><a href="{% url 'view_profile' post.user.id %}">{{ post.user.username }}</a></h4>
+
+            {% if post.user == user %}
+                <p class="edit-post" style="color:blue" data-post_id="{{ post.id }}">Edit</p>
+            {% endif %}
+
+            <div id="content-{{ post.id }}">
+                <p>{{ post.content }}</p>
+            </div>
+
+            <div id="edit-post-content-{{ post.id }}"></div>
+
+            <p>{{ post.timestamp }}</p>
+
+            {% if user.is_authenticated %}
+                <p class="likes" data-post_id="{{ post.id }}"></p>
+            {% else %}
+                <p>&#129293; {{ post.likes }}</p>
+            {% endif %}
+        </div>
+        <br>
+    {% empty %}
+        <h3 style="margin-left:40px">Sadly no posts have been made yet.</h3>
+    {% endfor %}
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if posts.has_previous %}
+                <a href="?page={{ posts.previous_page_number }}">&laquo; previous</a>
+            {% endif %}
+    
+            <span class="current">
+               Page {{ posts.number }}
+            </span>
+    
+            {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}">next &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %}
